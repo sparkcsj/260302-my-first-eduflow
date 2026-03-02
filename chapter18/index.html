@@ -1,0 +1,2390 @@
+
+<!doctype html>
+<html lang="ko" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="코딩이 아니라 사고력을 배우는 데이터과학 입문 교육자료. 파이썬과 Orange3를 활용해 데이터 수집부터 머신러닝까지, 두려움 없이 데이터를 즐기는 여정을 안내합니다.">
+      
+      
+        <meta name="author" content="Created with EduFlow">
+      
+      
+      
+        <link rel="prev" href="../chapter17/">
+      
+      
+        <link rel="next" href="../chapter19/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.3">
+    
+    
+      
+        <title>수행평가 워크숍 ③ - Orange3로 내 데이터 모델링 - 데이터로 말하다 - 대전외고 데이터과학 입문</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Noto+Sans+KR:300,300i,400,400i,700,700i%7CJetBrains+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Noto Sans KR";--md-code-font:"JetBrains Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../stylesheets/custom.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="deep-purple">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#chapter-18-3-orange3" class="md-skip">
+          콘텐츠로 이동
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="상단/헤더">
+    <a href=".." title="데이터로 말하다 - 대전외고 데이터과학 입문" class="md-header__button md-logo" aria-label="데이터로 말하다 - 대전외고 데이터과학 입문" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            데이터로 말하다 - 대전외고 데이터과학 입문
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              수행평가 워크숍 ③ - Orange3로 내 데이터 모델링
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="deep-purple"  aria-label="다크 모드로 전환"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="다크 모드로 전환" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="deep-purple"  aria-label="라이트 모드로 전환"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="라이트 모드로 전환" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="검색" placeholder="검색" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="검색">
+        
+        <button type="reset" class="md-search__icon md-icon" title="지우기" aria-label="지우기" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            검색 초기화
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="탭" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href=".." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../chapter01/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Part 1 - [1권] Part 1: 데이터과학, 첫 만남
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../chapter06/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Part 2 - [1권] Part 2: 데이터를 찾고, 질문을 던지다
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../chapter09/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Part 3 - [1권] Part 3: 파이썬으로 데이터 다듬기
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../chapter13/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Part 4 - [2권] Part 4: Orange3로 머신러닝 체험하기
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="./" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Part 5 - [2권] Part 5: 나만의 데이터 프로젝트 완성
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="네비게이션" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="데이터로 말하다 - 대전외고 데이터과학 입문" class="md-nav__button md-logo" aria-label="데이터로 말하다 - 대전외고 데이터과학 입문" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    데이터로 말하다 - 대전외고 데이터과학 입문
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Part 1 - [1권] Part 1: 데이터과학, 첫 만남
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Part 1 - [1권] Part 1: 데이터과학, 첫 만남
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chapter01/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    데이터로 본 외고인의 하루
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chapter02/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    우리 수업의 전체 지도 - 교과·도구·여정 안내
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chapter03/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    평가, 다 보여줄게 - 수행평가 & 지필 완전 공개
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chapter04/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    첫 번째 실습: 우리 반 MBTI 데이터 시각화
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chapter05/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    두 번째 실습: 내 전공어로 만드는 Word Cloud
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Part 2 - [1권] Part 2: 데이터를 찾고, 질문을 던지다
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Part 2 - [1권] Part 2: 데이터를 찾고, 질문을 던지다
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chapter06/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    데이터는 어디에? - 공공데이터의 세계
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chapter07/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    좋은 질문이 좋은 분석을 만든다 - 문제 정의의 기술
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chapter08/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    수행평가 워크숍 ① - 아이디어 설계 & 데이터 수집
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Part 3 - [1권] Part 3: 파이썬으로 데이터 다듬기
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Part 3 - [1권] Part 3: 파이썬으로 데이터 다듬기
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chapter09/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    판다스 첫 걸음 - 데이터를 불러오고 훑어보기
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chapter10/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    더러운 데이터, 깨끗하게 - 결측값과 이상값 처리
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chapter11/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    데이터를 그림으로 - 시각화의 힘
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chapter12/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    수행평가 워크숍 ② - 내 데이터 전처리 & 시각화
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Part 4 - [2권] Part 4: Orange3로 머신러닝 체험하기
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Part 4 - [2권] Part 4: Orange3로 머신러닝 체험하기
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chapter13/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    머신러닝이 뭐길래? - 개념과 일상 속 사례
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chapter14/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Orange3 첫 만남 - 설치부터 위젯 탐험까지
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chapter15/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Orange3로 시각화하기 - 클릭만으로 그래프 완성
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chapter16/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    분류 모델 만들기 - 붓꽃도 구분하고, 스팸도 걸러내고
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chapter17/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    여러 모델 비교하기 - 누가 더 똑똑한가?
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Part 5 - [2권] Part 5: 나만의 데이터 프로젝트 완성
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Part 5 - [2권] Part 5: 나만의 데이터 프로젝트 완성
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    수행평가 워크숍 ③ - Orange3로 내 데이터 모델링
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    수행평가 워크숍 ③ - Orange3로 내 데이터 모델링
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="목차">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      목차
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🎯 이 장에서 배우는 것
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        💡 왜 이걸 배우나요?
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        📚 핵심 개념
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="📚 핵심 개념">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        개념 1: 분석 질문과 모델의 짝짓기
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-orange3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        개념 2: Orange3의 워크플로우 구조
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        개념 3: 훈련 데이터와 테스트 데이터 분할
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        개념 4: 모델 결과 해석하기
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🔨 따라하기
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🔨 따라하기">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#step-1-orange3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 1: 자신의 데이터를 Orange3에 불러오기
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 2: 분석 질문 정하고 분석 위젯 선택하기
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 3: 분류 모델 구성하기 (의사결정나무 예시)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-4-k-means" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 4: 군집화 모델 구성하기 (k-Means 예시)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 5: 모델 결과 해석하기
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 6: 발견 사항을 문장으로 정리하기
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        📝 전체 코드
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ⚠️ 자주 하는 실수
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="⚠️ 자주 하는 실수">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        실수 1: "이 선이 뭐하는 선이에요?"
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-90-80" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        실수 2: "모델이 90% 정확도인데 왜 우리 데이터로는 80%만 나와요?"
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-k" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        실수 3: "k값을 어떻게 정해요?"
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ✅ 스스로 점검하기
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🚀 더 해보기
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🚀 더 해보기">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        도전 1: 다른 모델과 비교해보기
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-k" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        도전 2: k값 최적화 워크플로우 만들기
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-feature-importance" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        도전 3: 특성 중요도(Feature Importance) 확인하기
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        도전 4: 워크플로우 저장하고 수정하기
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🔗 다음 장으로
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chapter19/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    데이터 스토리텔링 - 숫자를 이야기로 바꾸는 법
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chapter20/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    수행평가 워크숍 ④ - 포스터 제작 & 최종 발표
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chapter21/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    지필평가 대비 - 핵심 개념 총정리
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="목차">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      목차
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🎯 이 장에서 배우는 것
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        💡 왜 이걸 배우나요?
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        📚 핵심 개념
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="📚 핵심 개념">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        개념 1: 분석 질문과 모델의 짝짓기
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-orange3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        개념 2: Orange3의 워크플로우 구조
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        개념 3: 훈련 데이터와 테스트 데이터 분할
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        개념 4: 모델 결과 해석하기
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🔨 따라하기
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🔨 따라하기">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#step-1-orange3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 1: 자신의 데이터를 Orange3에 불러오기
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 2: 분석 질문 정하고 분석 위젯 선택하기
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 3: 분류 모델 구성하기 (의사결정나무 예시)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-4-k-means" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 4: 군집화 모델 구성하기 (k-Means 예시)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 5: 모델 결과 해석하기
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 6: 발견 사항을 문장으로 정리하기
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        📝 전체 코드
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ⚠️ 자주 하는 실수
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="⚠️ 자주 하는 실수">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        실수 1: "이 선이 뭐하는 선이에요?"
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-90-80" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        실수 2: "모델이 90% 정확도인데 왜 우리 데이터로는 80%만 나와요?"
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-k" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        실수 3: "k값을 어떻게 정해요?"
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ✅ 스스로 점검하기
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🚀 더 해보기
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🚀 더 해보기">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        도전 1: 다른 모델과 비교해보기
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-k" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        도전 2: k값 최적화 워크플로우 만들기
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-feature-importance" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        도전 3: 특성 중요도(Feature Importance) 확인하기
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        도전 4: 워크플로우 저장하고 수정하기
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🔗 다음 장으로
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="chapter-18-3-orange3">Chapter 18: 수행평가 워크숍 ③ - Orange3로 내 데이터 모델링<a class="headerlink" href="#chapter-18-3-orange3" title="Permanent link">&para;</a></h1>
+<h2 id="_1">🎯 이 장에서 배우는 것<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
+<ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> 자신이 수집·전처리한 데이터를 Orange3에 불러와 분석 워크플로우를 구성할 수 있다</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> 분석 목적에 맞는 모델(분류/군집화)을 선택하고 적용할 수 있다</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> 모델의 결과를 해석하여 분석 질문에 대한 답을 도출할 수 있다</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> 워크플로우를 보며 자신의 분석 과정을 설명할 수 있다</li>
+</ul>
+<hr />
+<h2 id="_2">💡 왜 이걸 배우나요?<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
+<p>지금까지 여러분은 <strong>데이터를 모았고, 정리했고, 탐색했습니다</strong>. 하지만 진정한 데이터 분석의 시작은 여기서부터입니다. 이제 "이 데이터가 나에게 말해주는 게 뭘까?"라는 질문에 <strong>모델링</strong>으로 답하는 단계예요.</p>
+<p>생각해보세요. 마케팅팀이 "어떤 고객이 상품을 구매할까?"라고 묻거나, 의료팀이 "이 증상들로부터 질병을 예측할 수 있을까?"라고 물을 때 우리는 기계학습 모델을 씁니다. </p>
+<p><strong>Orange3</strong>는 이 과정을 마우스 클릭만으로 가능하게 해줍니다. 복잡한 코드 없이 자신의 <strong>분석 질문을 시각적 워크플로우로 표현</strong>하고, <strong>모델의 성능을 즉시 확인</strong>할 수 있죠. 이것이 진정한 "데이터 과학자의 일"입니다.</p>
+<hr />
+<h2 id="_3">📚 핵심 개념<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
+<h3 id="1">개념 1: 분석 질문과 모델의 짝짓기<a class="headerlink" href="#1" title="Permanent link">&para;</a></h3>
+<p><strong>비유로 시작</strong></p>
+<p>의사가 환자를 진료할 때 "감기"인지 "독감"인지 구분하려면 <strong>분류 모델</strong>이 필요합니다. 하지만 그 환자가 "어떤 증상의 그룹에 속할까?"를 알고 싶다면 <strong>군집화 모델</strong>을 써야 합니다. 각 질문마다 맞는 도구가 있다는 뜻이에요.</p>
+<p><strong>정확한 정의</strong></p>
+<p>모델 선택은 <strong>분석 질문의 종류</strong>에 따라 결정됩니다:</p>
+<ul>
+<li><strong>분류(Classification)</strong>: "이것은 A인가, B인가?"</li>
+<li>예: 메일이 스팸인가? / 종양이 악성인가?</li>
+<li>
+<p>모델: 의사결정나무, 로지스틱 회귀, SVM</p>
+</li>
+<li>
+<p><strong>군집화(Clustering)</strong>: "이 데이터들은 몇 개의 그룹으로 나뉠까?"</p>
+</li>
+<li>예: 고객을 몇 세그먼트로 분류할 수 있을까? / 비슷한 특징의 제품끼리 묶을 수 있을까?</li>
+<li>모델: k-Means, 계층적 군집화</li>
+</ul>
+<p><strong>예시로 확인</strong></p>
+<p>당신이 "우리 카페의 단골 고객은 몇 명일까? 그들은 어떤 특징이 있을까?"라고 물었다면 <strong>k-Means 군집화</strong>를 씁니다. 하지만 "새로 들어온 고객이 단골이 될까, 일회 고객이 될까?"라고 물었다면 <strong>의사결정나무 분류</strong>를 씁니다.</p>
+<hr />
+<h3 id="2-orange3">개념 2: Orange3의 워크플로우 구조<a class="headerlink" href="#2-orange3" title="Permanent link">&para;</a></h3>
+<p><strong>비유로 시작</strong></p>
+<p>Orange3의 워크플로우는 <strong>공장의 컨베이어 벨트</strong>와 같습니다. 원료가 들어와 여러 역할을 하는 기계를 통과하며 완성품이 되어나가죠.</p>
+<p><strong>정확한 정의</strong></p>
+<p>Orange3의 워크플로우는 이렇게 흐릅니다:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>데이터 입력 → 탐색 → 전처리 → 모델 학습 → 평가 → 해석
+</span></code></pre></div>
+<p>각 단계는 <strong>위젯(widget)</strong>이라는 시각 도구로 표현되며, 위젯들을 <strong>선으로 연결</strong>하여 데이터가 흐르도록 합니다.</p>
+<p><strong>예시로 확인</strong></p>
+<p>여러분의 "학생 성적 데이터"를 Orange3에 불러온다면:</p>
+<ol>
+<li><strong>File</strong> 위젯: CSV 파일 불러오기</li>
+<li><strong>Data Table</strong> 위젯: 데이터 미리보기</li>
+<li><strong>Select Columns</strong> 위젯: 필요한 열 선택 (예: 성별, 학습시간, 최종성적)</li>
+<li><strong>Tree</strong> 위젯(의사결정나무): "성별과 학습시간으로 성적을 예측할 수 있을까?" 모델 학습</li>
+<li><strong>Confusion Matrix</strong> 위젯: 모델이 얼마나 잘 맞혔는지 확인</li>
+</ol>
+<hr />
+<h3 id="3">개념 3: 훈련 데이터와 테스트 데이터 분할<a class="headerlink" href="#3" title="Permanent link">&para;</a></h3>
+<p><strong>비유로 시작</strong></p>
+<p>학생이 교과서만 외우고 시험을 본다면, 교과서와 같은 문제가 나올 때만 맞을 겁니다. 중요한 건 <strong>본 적 없는 문제를 푸는 능력</strong>이죠. 모델도 마찬가지입니다.</p>
+<p><strong>정확한 정의</strong></p>
+<p>모델이 <strong>과적합(overfitting)</strong>되지 않으려면 데이터를 두 부분으로 나눕니다:</p>
+<ul>
+<li><strong>훈련 데이터(Training Data)</strong>: 모델을 학습시키는 데 사용 (보통 70~80%)</li>
+<li><strong>테스트 데이터(Test Data)</strong>: 모델이 <strong>처음 본</strong> 데이터로 성능을 평가 (보통 20~30%)</li>
+</ul>
+<p><strong>예시로 확인</strong></p>
+<p>100명의 학생 성적 데이터가 있다면:
+- 70명으로 모델을 학습: "이 패턴들을 기억해!"
+- 30명으로 모델을 평가: "정말로 새로운 학생의 성적을 맞출 수 있어?"</p>
+<p>Orange3는 이 분할을 <strong>Test &amp; Score</strong> 위젯이 자동으로 처리해줍니다.</p>
+<hr />
+<h3 id="4">개념 4: 모델 결과 해석하기<a class="headerlink" href="#4" title="Permanent link">&para;</a></h3>
+<p><strong>비유로 시작</strong></p>
+<p>의사가 X선 검사 결과를 얻었다면, 단순히 "암 확률 87%"라는 숫자만으로는 부족합니다. "왜 그럴까? 어떤 부분이 위험한가?"를 설명해야 환자와 치료 계획을 짜죠. 모델 해석도 같습니다.</p>
+<p><strong>정확한 정의</strong></p>
+<p>모델 결과를 해석하는 핵심 메트릭들:</p>
+<ul>
+<li><strong>정확도(Accuracy)</strong>: 전체 중 맞게 예측한 비율</li>
+<li>공식: (맞은 예측) / (전체 예측)</li>
+<li>
+<p>해석: "이 모델은 87% 확률로 맞춘다"</p>
+</li>
+<li>
+<p><strong>혼동 행렬(Confusion Matrix)</strong>: 어떤 유형의 실수가 나왔는지</p>
+</li>
+<li>진양성(TP): 맞게 '예'라고 함</li>
+<li>거짓양성(FP): 틀리게 '예'라고 함 (위험!)</li>
+<li>진음성(TN): 맞게 '아니오'라고 함</li>
+<li>거짓음성(FN): 틀리게 '아니오'라고 함 (위험!)</li>
+</ul>
+<p><strong>예시로 확인</strong></p>
+<p>"악성 종양 진단 모델"의 혼동 행렬:</p>
+<ul>
+<li>TP: 정말 악성인데 모델이 악성이라고 함 ✓</li>
+<li>FP: 양성인데 모델이 악성이라고 함 ✗ (환자가 불안해함)</li>
+<li>TN: 정말 양성인데 모델이 양성이라고 함 ✓</li>
+<li>FN: 악성인데 모델이 양성이라고 함 ✗✗ (매우 위험!)</li>
+</ul>
+<p>모델의 정확도가 85%라도, FN이 많으면 이 모델은 <strong>실제로는 좋지 못합니다</strong>.</p>
+<hr />
+<h2 id="_4">🔨 따라하기<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h2>
+<h3 id="step-1-orange3">Step 1: 자신의 데이터를 Orange3에 불러오기<a class="headerlink" href="#step-1-orange3" title="Permanent link">&para;</a></h3>
+<p><strong>준비물</strong>: 이전 워크숍에서 전처리한 CSV 파일</p>
+<ol>
+<li>Orange3를 열고 <strong>새 프로젝트</strong>를 만듭니다</li>
+<li>왼쪽 위젯 패널에서 <strong>Data → File</strong> 을 드래그하여 캔버스에 놓습니다</li>
+<li>File 위젯을 더블클릭하여 열고, 자신의 CSV 파일을 선택합니다</li>
+<li>File 위젯 옆에 <strong>Data → Data Table</strong> 을 놓고 File 위젯의 원형 아웃렛에서 Data Table로 연결합니다</li>
+<li>Data Table을 실행(▶ 버튼)하여 데이터가 제대로 불러와졌는지 확인합니다</li>
+</ol>
+<p><strong>💡 팁</strong>: Data Table에서 각 열의 종류(수치형/문자형)가 올바르게 인식되었는지 확인하세요!</p>
+<hr />
+<h3 id="step-2">Step 2: 분석 질문 정하고 분석 위젯 선택하기<a class="headerlink" href="#step-2" title="Permanent link">&para;</a></h3>
+<p>이 단계에서 <strong>당신의 분석 질문</strong>을 명확히 해야 합니다.</p>
+<p><strong>분류 문제를 고르는 경우</strong> (예: "성별을 나이와 구매액으로 예측할 수 있을까?")
+- Target 변수(예측 대상): 성별
+- Feature 변수(예측에 쓸 정보): 나이, 구매액</p>
+<p><strong>군집화 문제를 고르는 경우</strong> (예: "고객을 몇 개 그룹으로 나눌 수 있을까?")
+- 모든 변수를 feature로 사용
+- Target이 없음 (레이블이 없는 학습)</p>
+<hr />
+<h3 id="step-3">Step 3: 분류 모델 구성하기 (의사결정나무 예시)<a class="headerlink" href="#step-3" title="Permanent link">&para;</a></h3>
+<ol>
+<li>Data Table 다음에 <strong>Model → Tree</strong> 위젯을 연결합니다</li>
+<li>Tree를 더블클릭하여 설정 창을 엽니다</li>
+<li><strong>Target Variable(목표 변수)</strong>로 예측하려는 열을 선택합니다 (예: "성별")</li>
+<li>Tree 위젯 옆에 <strong>Evaluate → Test &amp; Score</strong> 를 놓습니다</li>
+<li>Tree의 Learner 아웃렛 → Test &amp; Score의 Learner 입력 포트에 연결</li>
+<li>Data Table의 아웃렛 → Test &amp; Score의 Data 입력 포트에 연결</li>
+<li>Test &amp; Score를 실행하면 <strong>자동으로 7:3으로 데이터 분할</strong>하고 모델을 평가합니다</li>
+</ol>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>File → Data Table → Tree → Test &amp; Score
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>                     ↑
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>                (Data Table에서 데이터도 입력)
+</span></code></pre></div>
+<hr />
+<h3 id="step-4-k-means">Step 4: 군집화 모델 구성하기 (k-Means 예시)<a class="headerlink" href="#step-4-k-means" title="Permanent link">&para;</a></h3>
+<ol>
+<li>Data Table 다음에 <strong>Model → k-Means</strong> 위젯을 연결합니다</li>
+<li>k-Means를 더블클릭하여 <strong>클러스터 개수(k값)</strong>를 설정합니다 (예: k=3)</li>
+<li><strong>Visualize → Scatter Plot</strong> 을 놓고 k-Means와 Data Table을 연결합니다</li>
+<li>Scatter Plot을 더블클릭하여 <strong>X축, Y축을 선택</strong>합니다 (예: 나이, 구매액)</li>
+<li>Scatter Plot을 실행하면 <strong>색깔이 다른 점들의 클러스터</strong>가 시각화됩니다</li>
+<li>각 클러스터가 "어떤 특징을 가진 고객 그룹인지" 분석합니다</li>
+</ol>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>File → Data Table → k-Means → Scatter Plot
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>         ↓
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>      (Data도 Scatter Plot에 연결)
+</span></code></pre></div>
+<hr />
+<h3 id="step-5">Step 5: 모델 결과 해석하기<a class="headerlink" href="#step-5" title="Permanent link">&para;</a></h3>
+<p><strong>분류 모델의 경우</strong> (Test &amp; Score 창에서):
+1. <strong>Confusion Matrix 탭</strong>을 클릭합니다
+2. 대각선(좌상향 → 우하향)의 숫자가 클수록 모델이 잘 작동합니다
+3. 각 셀의 숫자를 세어 <strong>정확도를 계산</strong>합니다: (대각선 합) / (전체 합) × 100%</p>
+<p><strong>군집화 모델의 경우</strong> (Scatter Plot에서):
+1. 색깔로 표현된 클러스터들이 <strong>명확히 분리되어 있는가</strong>를 봅니다
+2. 각 클러스터에 속한 데이터들의 <strong>공통 특징</strong>을 찾습니다
+3. "이 클러스터는 어떤 의미일까?"라고 해석합니다</p>
+<hr />
+<h3 id="step-6">Step 6: 발견 사항을 문장으로 정리하기<a class="headerlink" href="#step-6" title="Permanent link">&para;</a></h3>
+<p>모델이 완성되면, <strong>3-5문장으로 결과를 설명</strong>하는 연습을 합니다.</p>
+<p><strong>좋은 해석 예시</strong>:</p>
+<blockquote>
+<p>"의사결정나무 모델로 학생의 성별을 나이와 주간학습시간으로 예측했을 때, 정확도는 81%였습니다. 특히 주간학습시간이 15시간 이상인 학생은 대부분 특정 성별로 분류되었는데, 이는 학습 시간이 성별과 무관한 변수임을 시사합니다."</p>
+</blockquote>
+<p><strong>피해야 할 해석</strong>:
+- ❌ "정확도가 81%래요" (이게 높은가 낮은가? 왜?)
+- ❌ "모델이 잘 작동했어요" (무엇을 근거로?)
+- ❌ "숫자들이 많이 맞았어요" (구체적 수치 필요)</p>
+<hr />
+<h2 id="_5">📝 전체 코드<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h2>
+<p>Orange3는 <strong>GUI 기반</strong>이므로 "코드"가 아닌 워크플로우입니다. 하지만 자신의 분석 결과를 <strong>Python으로 재현</strong>하고 싶다면 다음과 같이 합니다:</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="c1"># Orange 패키지 설치 (터미널에서)</span>
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="c1"># pip install orange3</span>
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>
+</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="kn">from</span><span class="w"> </span><span class="nn">Orange.data</span><span class="w"> </span><span class="kn">import</span> <span class="n">Table</span>
+</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="kn">from</span><span class="w"> </span><span class="nn">Orange.classification</span><span class="w"> </span><span class="kn">import</span> <span class="n">TreeLearner</span>
+</span><span id="__span-3-6"><a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a><span class="kn">from</span><span class="w"> </span><span class="nn">Orange.evaluation</span><span class="w"> </span><span class="kn">import</span> <span class="n">CrossValidation</span><span class="p">,</span> <span class="n">CA</span>
+</span><span id="__span-3-7"><a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+</span><span id="__span-3-8"><a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a>
+</span><span id="__span-3-9"><a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a><span class="c1"># 1. 데이터 불러오기</span>
+</span><span id="__span-3-10"><a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a><span class="n">data</span> <span class="o">=</span> <span class="n">Table</span><span class="p">(</span><span class="s2">&quot;your_data.csv&quot;</span><span class="p">)</span>
+</span><span id="__span-3-11"><a id="__codelineno-3-11" name="__codelineno-3-11" href="#__codelineno-3-11"></a>
+</span><span id="__span-3-12"><a id="__codelineno-3-12" name="__codelineno-3-12" href="#__codelineno-3-12"></a><span class="c1"># 2. 의사결정나무 모델 생성 및 학습</span>
+</span><span id="__span-3-13"><a id="__codelineno-3-13" name="__codelineno-3-13" href="#__codelineno-3-13"></a><span class="n">learner</span> <span class="o">=</span> <span class="n">TreeLearner</span><span class="p">(</span><span class="n">max_depth</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+</span><span id="__span-3-14"><a id="__codelineno-3-14" name="__codelineno-3-14" href="#__codelineno-3-14"></a><span class="n">results</span> <span class="o">=</span> <span class="n">CrossValidation</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="p">[</span><span class="n">learner</span><span class="p">],</span> <span class="n">k</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>  <span class="c1"># 5-fold 교차검증</span>
+</span><span id="__span-3-15"><a id="__codelineno-3-15" name="__codelineno-3-15" href="#__codelineno-3-15"></a>
+</span><span id="__span-3-16"><a id="__codelineno-3-16" name="__codelineno-3-16" href="#__codelineno-3-16"></a><span class="c1"># 3. 정확도 출력</span>
+</span><span id="__span-3-17"><a id="__codelineno-3-17" name="__codelineno-3-17" href="#__codelineno-3-17"></a><span class="n">accuracy</span> <span class="o">=</span> <span class="n">CA</span><span class="p">(</span><span class="n">results</span><span class="p">)</span>
+</span><span id="__span-3-18"><a id="__codelineno-3-18" name="__codelineno-3-18" href="#__codelineno-3-18"></a><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;모델 정확도: </span><span class="si">{</span><span class="n">accuracy</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">:</span><span class="s2">.2%</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</span><span id="__span-3-19"><a id="__codelineno-3-19" name="__codelineno-3-19" href="#__codelineno-3-19"></a>
+</span><span id="__span-3-20"><a id="__codelineno-3-20" name="__codelineno-3-20" href="#__codelineno-3-20"></a><span class="c1"># 4. k-Means 군집화 (참고용)</span>
+</span><span id="__span-3-21"><a id="__codelineno-3-21" name="__codelineno-3-21" href="#__codelineno-3-21"></a><span class="kn">from</span><span class="w"> </span><span class="nn">Orange.clustering</span><span class="w"> </span><span class="kn">import</span> <span class="n">KMeans</span>
+</span><span id="__span-3-22"><a id="__codelineno-3-22" name="__codelineno-3-22" href="#__codelineno-3-22"></a><span class="kn">from</span><span class="w"> </span><span class="nn">Orange.evaluation</span><span class="w"> </span><span class="kn">import</span> <span class="n">silhouette_score</span>
+</span><span id="__span-3-23"><a id="__codelineno-3-23" name="__codelineno-3-23" href="#__codelineno-3-23"></a>
+</span><span id="__span-3-24"><a id="__codelineno-3-24" name="__codelineno-3-24" href="#__codelineno-3-24"></a><span class="n">kmeans</span> <span class="o">=</span> <span class="n">KMeans</span><span class="p">(</span><span class="n">n_clusters</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+</span><span id="__span-3-25"><a id="__codelineno-3-25" name="__codelineno-3-25" href="#__codelineno-3-25"></a><span class="n">clustered_data</span> <span class="o">=</span> <span class="n">kmeans</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+</span><span id="__span-3-26"><a id="__codelineno-3-26" name="__codelineno-3-26" href="#__codelineno-3-26"></a>
+</span><span id="__span-3-27"><a id="__codelineno-3-27" name="__codelineno-3-27" href="#__codelineno-3-27"></a><span class="c1"># 시각화 (pandas 활용)</span>
+</span><span id="__span-3-28"><a id="__codelineno-3-28" name="__codelineno-3-28" href="#__codelineno-3-28"></a><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">X</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="n">attr</span><span class="o">.</span><span class="n">name</span> <span class="k">for</span> <span class="n">attr</span> <span class="ow">in</span> <span class="n">data</span><span class="o">.</span><span class="n">domain</span><span class="o">.</span><span class="n">attributes</span><span class="p">])</span>
+</span><span id="__span-3-29"><a id="__codelineno-3-29" name="__codelineno-3-29" href="#__codelineno-3-29"></a><span class="n">df</span><span class="p">[</span><span class="s1">&#39;Cluster&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">clustered_data</span>
+</span><span id="__span-3-30"><a id="__codelineno-3-30" name="__codelineno-3-30" href="#__codelineno-3-30"></a><span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;Cluster&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">describe</span><span class="p">())</span>
+</span></code></pre></div>
+<hr />
+<h2 id="_6">⚠️ 자주 하는 실수<a class="headerlink" href="#_6" title="Permanent link">&para;</a></h2>
+<h3 id="1_1">실수 1: "이 선이 뭐하는 선이에요?"<a class="headerlink" href="#1_1" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>원인</strong>: 위젯 아웃렛(원형 포트)의 <strong>데이터 종류를 이해하지 못함</strong></li>
+<li><strong>해결</strong>: 각 위젯을 더블클릭해서 <strong>입력/출력 설정</strong>을 확인하세요</li>
+<li>빨간 선: 데이터 테이블</li>
+<li>파란 선: 학습된 모델</li>
+<li>초록 선: 분류 결과</li>
+</ul>
+<h3 id="2-90-80">실수 2: "모델이 90% 정확도인데 왜 우리 데이터로는 80%만 나와요?"<a class="headerlink" href="#2-90-80" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>원인</strong>: <strong>훈련 데이터 vs 테스트 데이터의 차이</strong> 미인식</li>
+<li><strong>해결</strong>: Test &amp; Score를 항상 사용하세요. 훈련 데이터에서만 높은 정확도는 <strong>과적합</strong>을 의미합니다</li>
+</ul>
+<h3 id="3-k">실수 3: "k값을 어떻게 정해요?"<a class="headerlink" href="#3-k" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>원인</strong>: 군집화에서 <strong>최적 k값을 결정하는 방법을 모름</strong></li>
+<li><strong>해결</strong>: </li>
+<li>k=2부터 k=10까지 여러 번 시도해보세요</li>
+<li>Scatter Plot에서 <strong>클러스터가 명확히 분리되는 k값</strong>을 고르세요</li>
+<li>또는 <strong>Elbow Method</strong>를 사용하세요 (이후 고급 과정)</li>
+</ul>
+<hr />
+<h2 id="_7">✅ 스스로 점검하기<a class="headerlink" href="#_7" title="Permanent link">&para;</a></h2>
+<p>자신의 Orange3 워크플로우가 완성되었다면, 다음 질문에 답할 수 있는지 확인하세요:</p>
+<p><strong>1️⃣ 워크플로우 이해도</strong>
+- ✓ 자신의 워크플로우를 그림으로 그릴 수 있나요?
+- ✓ 각 위젯이 "어디서 어디로" 데이터를 보내는지 설명할 수 있나요?</p>
+<p><strong>2️⃣ 분석 질문과 모델 선택</strong>
+- ✓ "왜 이 문제에는 분류/군집화가 맞는가?"를 설명할 수 있나요?
+- ✓ 다른 모델을 선택했다면 어떤 결과가 나올지 예상할 수 있나요?</p>
+<p><strong>3️⃣ 결과 해석</strong>
+- ✓ 혼동 행렬의 각 셀이 무엇을 의미하는지 설명할 수 있나요?
+- ✓ "정확도 85%"가 높은 건지 낮은 건지 판단할 수 있나요?
+- ✓ 모델의 결과를 3문장 이상으로 설명할 수 있나요?</p>
+<p><strong>4️⃣ 데이터 분할 이해</strong>
+- ✓ 훈련 데이터와 테스트 데이터가 왜 필요한지 설명할 수 있나요?
+- ✓ 자신의 모델에서 정확히 몇 개의 데이터가 훈련용/테스트용으로 나뉘었는지 알 수 있나요?</p>
+<hr />
+<h2 id="_8">🚀 더 해보기<a class="headerlink" href="#_8" title="Permanent link">&para;</a></h2>
+<h3 id="1_2">도전 1: 다른 모델과 비교해보기<a class="headerlink" href="#1_2" title="Permanent link">&para;</a></h3>
+<p>지금까지는 <strong>의사결정나무</strong>로 분류했다면, <strong>로지스틱 회귀</strong>나 <strong>SVM</strong>도 시도해보세요.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>같은 Data Table에서:
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>  - Tree → Test &amp; Score
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>  - Logistic Regression → Test &amp; Score  
+</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>  - SVM → Test &amp; Score
+</span></code></pre></div>
+<p>세 모델의 정확도를 비교하고, "어느 모델이 우리 데이터에 가장 잘 맞을까?"를 분석해보세요.</p>
+<h3 id="2-k">도전 2: k값 최적화 워크플로우 만들기<a class="headerlink" href="#2-k" title="Permanent link">&para;</a></h3>
+<p>k-Means에서 k=2, 3, 4, 5를 동시에 시도하고 각각을 시각화하면, <strong>최적 k값</strong>을 더 정확히 찾을 수 있습니다.</p>
+<h3 id="3-feature-importance">도전 3: 특성 중요도(Feature Importance) 확인하기<a class="headerlink" href="#3-feature-importance" title="Permanent link">&para;</a></h3>
+<p><strong>Tree 위젯 → Features 탭</strong>을 보면, 어떤 열이 모델의 예측에 <strong>가장 영향을 미쳤는지</strong> 볼 수 있습니다. 이 정보를 토대로 "실제로 예측에 도움이 되는 요소"를 찾아내세요.</p>
+<h3 id="4_1">도전 4: 워크플로우 저장하고 수정하기<a class="headerlink" href="#4_1" title="Permanent link">&para;</a></h3>
+<p>자신의 워크플로우를 <strong><code>.ows</code> 파일로 저장</strong>하면, 나중에 새로운 데이터를 불러와도 같은 분석을 반복할 수 있습니다. 이것이 데이터 분석의 <strong>재현성</strong>을 보장하는 방법입니다.</p>
+<hr />
+<h2 id="_9">🔗 다음 장으로<a class="headerlink" href="#_9" title="Permanent link">&para;</a></h2>
+<p>축하합니다! 🎉 이제 여러분은 <strong>자신의 데이터로 모델을 만들고 해석</strong>할 수 있습니다.</p>
+<p>다음 장(Chapter 19)에서는 이 모델을 <strong>시각적으로 아름답게 정리</strong>하고, <strong>발표 자료로 만드는 방법</strong>을 배웁니다. 수행평가를 완성하기 위한 마지막 단계죠!</p>
+<p><strong>여기서 꼭 기억하세요</strong>:</p>
+<blockquote>
+<p>"모델의 정확도가 높다는 것만큼 중요한 게, 그 결과를 명확히 설명하는 것입니다. 좋은 데이터 과학자는 훌륭한 이야기꾼이기도 합니다."</p>
+</blockquote>
+<hr />
+<p><strong>이 장의 학습을 완료했다면, 아래를 체크하세요:</strong>
+- ✅ 자신의 데이터를 Orange3에 불러올 수 있다
+- ✅ 분석 질문에 맞는 모델을 선택할 수 있다
+- ✅ 혼동 행렬과 정확도를 이해하고 해석할 수 있다
+- ✅ 모델 결과를 문장으로 설명할 수 있다</p>
+<p>다음 장으로 나아가세요! 🚀</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  맨위로
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.tabs", "navigation.sections", "navigation.top", "navigation.indexes", "search.suggest", "search.highlight", "content.code.copy", "content.code.annotate", "toc.follow"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\ud074\ub9bd\ubcf4\ub4dc\uc5d0 \ubcf5\uc0ac\ub428", "clipboard.copy": "\ud074\ub9bd\ubcf4\ub4dc\ub85c \ubcf5\uc0ac", "search.result.more.one": "\uc774 \ubb38\uc11c\uc5d0\uc11c 1\uac1c\uc758 \uac80\uc0c9 \uacb0\uacfc \ub354 \ubcf4\uae30", "search.result.more.other": "\uc774 \ubb38\uc11c\uc5d0\uc11c #\uac1c\uc758 \uac80\uc0c9 \uacb0\uacfc \ub354 \ubcf4\uae30", "search.result.none": "\uac80\uc0c9\uc5b4\uc640 \uc77c\uce58\ud558\ub294 \ubb38\uc11c\uac00 \uc5c6\uc2b5\ub2c8\ub2e4", "search.result.one": "1\uac1c\uc758 \uc77c\uce58\ud558\ub294 \ubb38\uc11c", "search.result.other": "#\uac1c\uc758 \uc77c\uce58\ud558\ub294 \ubb38\uc11c", "search.result.placeholder": "\uac80\uc0c9\uc5b4\ub97c \uc785\ub825\ud558\uc138\uc694", "search.result.term.missing": "\ud3ec\ud568\ub418\uc9c0 \uc54a\uc740 \uac80\uc0c9\uc5b4", "select.version": "\ubc84\uc804 \uc120\ud0dd"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="https://unpkg.com/mermaid@10/dist/mermaid.min.js"></script>
+      
+        <script src="../javascripts/title-link.js"></script>
+      
+    
+  </body>
+</html>
